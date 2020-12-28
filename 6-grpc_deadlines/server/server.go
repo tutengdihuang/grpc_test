@@ -60,7 +60,7 @@ func handle(ctx context.Context, req *pb.SimpleRequest, data chan<- *pb.SimpleRe
 	case <-ctx.Done():
 		log.Println(ctx.Err())
 		runtime.Goexit() //超时后退出该Go协程
-	case <-time.After(4 * time.Second): // 模拟耗时操作
+	case <-time.After(1 * time.Second): // 模拟耗时操作
 		res := pb.SimpleResponse{
 			Code:  200,
 			Value: "hello " + req.Data,

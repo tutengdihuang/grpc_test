@@ -53,7 +53,7 @@ func routeList() {
 	if err != nil {
 		log.Fatalf("Upload list err: %v", err)
 	}
-	for n := 0; n < 5; n++ {
+	for n := 0; n < 5000; n++ {
 		//向流中发送消息
 		err := stream.Send(&pb.StreamRequest{StreamData: "stream client rpc " + strconv.Itoa(n)})
 		//发送也要检测EOF，当服务端在消息没接收完前主动调用SendAndClose()关闭stream，此时客户端还执行Send()，则会返回EOF错误，所以这里需要加上io.EOF判断
