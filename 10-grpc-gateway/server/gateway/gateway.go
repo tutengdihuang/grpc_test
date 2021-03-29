@@ -23,7 +23,7 @@ import (
 func ProvideHTTP(endpoint string, grpcServer *grpc.Server) *http.Server {
 	ctx := context.Background()
 	//获取证书
-	creds, err := credentials.NewClientTLSFromFile("../tls/server.pem", "go-grpc-example")
+	creds, err := credentials.NewClientTLSFromFile("/Users/xuqianlong/WorkSpace/src/go-grpc-example/10-grpc-gateway/tls/server.pem", "go-grpc-example")
 	if err != nil {
 		log.Fatalf("Failed to create TLS credentials %v", err)
 	}
@@ -64,8 +64,8 @@ func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Ha
 
 // getTLSConfig获取TLS配置
 func getTLSConfig() *tls.Config {
-	cert, _ := ioutil.ReadFile("../tls/server.pem")
-	key, _ := ioutil.ReadFile("../tls/server.key")
+	cert, _ := ioutil.ReadFile("/Users/xuqianlong/WorkSpace/src/go-grpc-example/10-grpc-gateway/tls/server.pem")
+	key, _ := ioutil.ReadFile("/Users/xuqianlong/WorkSpace/src/go-grpc-example/10-grpc-gateway/tls/server.key")
 	var demoKeyPair *tls.Certificate
 	pair, err := tls.X509KeyPair(cert, key)
 	if err != nil {

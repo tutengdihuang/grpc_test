@@ -18,7 +18,7 @@ var grpcClient pb.SimpleClient
 
 func main() {
 	//从输入的证书文件中为客户端构造TLS凭证
-	creds, err := credentials.NewClientTLSFromFile("../tls/server.pem", "go-grpc-example")
+	creds, err := credentials.NewClientTLSFromFile("/Users/xuqianlong/WorkSpace/src/go-grpc-example/10-grpc-gateway/tls/server.pem", "go-grpc-example")
 	if err != nil {
 		log.Fatalf("Failed to create TLS credentials %v", err)
 	}
