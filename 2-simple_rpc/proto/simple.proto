@@ -1,33 +1,40 @@
-syntax = "proto3";// 协议为proto3
+syntax = "proto3";
 
-package protobuf.keeplive;
-// 定义发送请求信息
-option go_package = ".;protobuf_keeplive";
-message SimpleRequest{
-    // 定义发送的参数，采用驼峰命名方式，小写加下划线，如：student_name
-    // 参数类型 参数名 标识号(不可重复)
-    string data = 1;
+package hub;
+
+message RequestInfo{
+    string  		id = 1;				// request id
+    int32  			time = 2;			// request time strap
+    int32  			login = 3;   		// user login	client user name
+    string 			group = 4;			// user group   client user group
+    int32 			group_type = 5;		// B 1: A BOOK 2:B BOOK //add by wzp
+    double 			balance = 6;  		// client user balance
+    repeated double price = 7;
+
+    int32  			trade_order = 8;	// order id
+    uint32 			trade_type = 9;		// trade type:TT_ORDER_MK_OPEN = 0;TT_ORDER_MK_CLOSE = 1;TT_ORDER_MK_CLOSE_BY = 3;TT_ORDER_MK_CLOSE_ALL = 4;TT_ORDER_MK_CLOSE_PARTIAL = 5;
+    // TT_BR_ACTIVATE_SL = 11;TT_BR_ACTIVATE_TP=12;TT_BR_ACTIVATE_SO=13;TT_BR_ACTIVATE_PD=14;
+    int32  			trade_cmd = 10;		// trade command EX:OP_BUY=0;OP_SELL=1;OP_BUY_LIMIT=2;OP_SELL_LIMIT=3;OP_BUY_STOP=4;OP_SELL_STOP=5;OP_BALANCE=6;OP_CREDIT=7;
+    string 			trade_symbol = 11;	// trade symbol
+    int32  			trade_volume = 12;	// trade volume
+    double 			trade_price = 13;	// trade price
 }
 
-// 定义响应信息
-message SimpleResponse{
-    // 定义接收的参数
-    // 参数类型 参数名 标识号(不可重复)
-    int32 code = 1;
-    string value = 2;
+message resp_msg {
+    RequestInfo 	info = 1;
+    int32 			ret_type = 2;		//1--send; 2--reject; 3--reset
+    int32  			finish_status = 3; 	//record current finish status 0--new;1--partially finished ;2--finished
+    string 			comment = 4;   		// record bridge reject and reset reason.
 }
-// EchoRequest is the request for echo.
+
 message EchoRequest {
     string message = 1;
 }
-
-// EchoResponse is the response for echo.
 message EchoResponse {
-    string message = 1;
+    string message = 2;
 }
-// 定义我们的服务（可定义多个服务,每个服务可定义多个接口）
-service Simple{
-    // UnaryEcho is unary echo.
-    rpc UnaryEcho(EchoRequest) returns (EchoResponse) {}
-    rpc Route (SimpleRequest) returns (SimpleResponse){};
+
+service BridgeServer {
+    rpc Et6Trade (RequestInfo) returns (resp_msg) {}
+    rpc UnaryEcho(EchoRequest) returns(EchoResponse){}
 }

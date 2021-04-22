@@ -4,9 +4,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	pb "go-grpc-example/15authentication/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
-	pb "go-grpc-example/2-simple_rpc/proto"
 	"log"
 	"time"
 )

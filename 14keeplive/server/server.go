@@ -7,9 +7,9 @@ import (
 	"net"
 	"time"
 
+	pb "go-grpc-example/15authentication/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
-	pb "go-grpc-example/2-simple_rpc/proto"
 )
 
 // SimpleService 定义我们的服务
